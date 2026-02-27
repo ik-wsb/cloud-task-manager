@@ -1,0 +1,26 @@
+services:
+  database:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    container_name: cloud-task-db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=SuperStrongPassword123!
+    ports:
+      - "1433:1433"
+
+  backend:
+    image: mcr.microsoft.com/dotnet/aspnet:9.0
+    container_name: cloud-task-backend
+    command: tail -f /dev/null 
+    ports:
+      - "5000:8080"
+    depends_on:
+      - database
+
+  frontend:
+    image: nginx:alpine
+    container_name: cloud-task-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
