@@ -1,0 +1,14 @@
+C4Container
+    title Diagram kontenerów (C4) - Cloud Task Manager
+
+    Person(user, "Użytkownik", "Zarządza swoimi zadaniami")
+
+    System_Boundary(c1, "System Cloud Task Manager") {
+        Container(frontend, "Frontend", "React 19 / Vite", "Dostarcza interfejs użytkownika w przeglądarce")
+        Container(backend, "Backend API", ".NET 9", "Realizuje logikę biznesową i operacje CRUD")
+        ContainerDb(database, "Baza danych", "Azure SQL Edge", "Przechowuje dane o użytkownikach i zadaniach")
+    }
+
+    Rel(user, frontend, "Odwiedza stronę", "HTTPS")
+    Rel(frontend, backend, "Wywołuje REST API", "JSON/HTTPS")
+    Rel(backend, database, "Odczytuje i zapisuje dane", "TCP/IP")
