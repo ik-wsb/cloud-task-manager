@@ -18,9 +18,11 @@ services:
       - database
 
   frontend:
-    image: nginx:alpine
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
     container_name: cloud-task-frontend
     ports:
-      - "5173:80"
+      - "8080:80"
     depends_on:
       - backend
