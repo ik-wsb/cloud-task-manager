@@ -7,6 +7,9 @@ services:
       - MSSQL_SA_PASSWORD=SuperStrongPassword123!
     ports:
       - "1433:1433"
+    volumes:
+      - sql-data:/var/opt/mssql
+    restart: always
 
   backend:
     build:
@@ -27,3 +30,6 @@ services:
       - "8080:80"
     depends_on:
       - backend
+
+volumes:
+  sql-data:
