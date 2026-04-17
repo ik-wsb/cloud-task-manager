@@ -5,7 +5,9 @@ C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\CloudBackend.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\CloudBackend.runtimeconfig.json
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\CloudBackend.pdb
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\Azure.Core.dll
+C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\Azure.Extensions.AspNetCore.Configuration.Secrets.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\Azure.Identity.dll
+C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\Azure.Security.KeyVault.Secrets.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\Microsoft.Data.SqlClient.dll
@@ -39,11 +41,13 @@ C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\Swashbuckle.AspN
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\System.ClientModel.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\System.Configuration.ConfigurationManager.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\System.Drawing.Common.dll
+C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\System.Formats.Asn1.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\System.Memory.Data.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\System.Runtime.Caching.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\System.Security.Cryptography.ProtectedData.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\System.Security.Permissions.dll
+C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\System.Text.Json.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\System.Windows.Extensions.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
 C:\Users\igork\Desktop\repos\cloud-task-manager\backend\publish\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
