@@ -12,6 +12,8 @@ export default function Dashboard() {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
+  const [editingTitle, setEditingTitle] = useState('');
 
   // 1. READ
   const fetchTasks = () => {
@@ -52,7 +54,7 @@ export default function Dashboard() {
       });
   };
 
-  // 3. UPDATE 
+  // 3. UPDATE (Toggle Complete)
   const handleToggleComplete = (task: Task) => {
     api.put(`/api/tasks/${task.id}`, {
       title: task.title,
@@ -75,12 +77,39 @@ export default function Dashboard() {
       .catch(() => setError("Nie udało się usunąć zadania (Błąd 404/500)."));
   };
 
+  // 5. UPDATE (Edit Title)
+  const handleStartEdit = (task: Task) => {
+    setEditingTaskId(task.id);
+    setEditingTitle(task.title);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingTaskId(null);
+    setEditingTitle('');
+  };
+
+  const handleUpdateTitle = (task: Task) => {
+    if (!editingTitle.trim()) return;
+
+    api.put(`/api/tasks/${task.id}`, {
+      title: editingTitle,
+      isCompleted: task.isCompleted
+    })
+    .then(() => {
+      setTasks(tasks.map(t => 
+        t.id === task.id ? { ...t, title: editingTitle } : t
+      ));
+      setEditingTaskId(null);
+    })
+    .catch(() => setError("Nie udało się zmienić nazwy zadania."));
+  };
+  
   return (
     <div style={{ backgroundColor: '#f4f7f6', minHeight: '100vh', padding: '40px 20px', fontFamily: 'system-ui, sans-serif', color: '#333' }}>
       <div style={{ maxWidth: '700px', margin: '0 auto', backgroundColor: '#ffffff', padding: '30px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
         
         <h1 style={{ textAlign: 'center', color: '#1a1a1a', marginBottom: '30px', borderBottom: '2px solid #eaeaea', paddingBottom: '15px' }}>
-          Cloud Task Manager - Test
+          Cloud Task Manager
         </h1>
         
         {error && (
@@ -112,26 +141,52 @@ export default function Dashboard() {
               tasks.map(task => (
                 <li key={task.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', border: '1px solid #e2e8f0', padding: '16px 20px', marginBottom: '12px', borderRadius: '8px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
                   
-                  <div 
-                    onClick={() => handleToggleComplete(task)}
-                    style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', flex: 1 }}
-                  >
-                    <input 
-                      type="checkbox" 
-                      checked={task.isCompleted} 
-                      readOnly
-                      style={{ transform: 'scale(1.2)', cursor: 'pointer' }}
-                    />
-                    <span style={{ fontSize: '16px', color: task.isCompleted ? '#94a3b8' : '#1e293b', textDecoration: task.isCompleted ? 'line-through' : 'none', fontWeight: '500' }}>
-                      {task.title}
-                    </span>
-                  </div>
+                  {editingTaskId === task.id ? (
+                    // --- WIDOK EDYCJI ---
+                    <div style={{ display: 'flex', gap: '10px', flex: 1 }}>
+                      <input 
+                        type="text" 
+                        value={editingTitle}
+                        onChange={(e) => setEditingTitle(e.target.value)}
+                        style={{ flex: 1, padding: '8px', fontSize: '16px', borderRadius: '4px', border: '2px solid #2563eb', outline: 'none' }}
+                        autoFocus
+                      />
+                      <button onClick={() => handleUpdateTitle(task)} style={{ backgroundColor: '#10b981', color: 'white', fontWeight: 'bold', border: 'none', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer' }}>Zapisz</button>
+                      <button onClick={handleCancelEdit} style={{ backgroundColor: '#64748b', color: 'white', fontWeight: 'bold', border: 'none', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer' }}>Anuluj</button>
+                    </div>
+                  ) : (
+                    // --- WIDOK STANDARDOWY ---
+                    <>
+                      <div 
+                        onClick={() => handleToggleComplete(task)}
+                        style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', flex: 1 }}
+                      >
+                        <input 
+                          type="checkbox" 
+                          checked={task.isCompleted} 
+                          readOnly
+                          style={{ transform: 'scale(1.2)', cursor: 'pointer' }}
+                        />
+                        <span style={{ fontSize: '16px', color: task.isCompleted ? '#94a3b8' : '#1e293b', textDecoration: task.isCompleted ? 'line-through' : 'none', fontWeight: '500' }}>
+                          {task.title}
+                        </span>
+                      </div>
 
-                  <button 
-                    onClick={() => handleDeleteTask(task.id)}
-                    style={{ backgroundColor: '#ef4444', color: 'white', fontWeight: 'bold', border: 'none', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer', marginLeft: '10px' }}>
-                    Usuń
-                  </button>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <button 
+                          onClick={() => handleStartEdit(task)}
+                          style={{ backgroundColor: '#f59e0b', color: 'white', fontWeight: 'bold', border: 'none', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer' }}>
+                          Edytuj
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteTask(task.id)}
+                          style={{ backgroundColor: '#ef4444', color: 'white', fontWeight: 'bold', border: 'none', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer' }}>
+                          Usuń
+                        </button>
+                      </div>
+                    </>
+                  )}
+
                 </li>
               ))
             )}
