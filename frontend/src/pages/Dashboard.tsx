@@ -80,7 +80,7 @@ export default function Dashboard() {
       <div style={{ maxWidth: '700px', margin: '0 auto', backgroundColor: '#ffffff', padding: '30px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
         
         <h1 style={{ textAlign: 'center', color: '#1a1a1a', marginBottom: '30px', borderBottom: '2px solid #eaeaea', paddingBottom: '15px' }}>
-          Cloud Task Manager - Test CI/CD
+          Cloud Task Manager - Test
         </h1>
         
         {error && (
